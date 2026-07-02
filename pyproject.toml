@@ -1,0 +1,32 @@
+[project]
+name = "jarvis"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.15.0",
+    "duckduckgo-search>=8.1.1",
+    "faiss-cpu>=1.14.3",
+    "faster-whisper>=1.2.1",
+    "fastmcp>=3.4.2",
+    "google-genai>=2.10.0",
+    "keyboard>=0.13.5",
+    "loguru>=0.7.3",
+    "mouse>=0.7.1",
+    "mss>=10.2.0",
+    "opencv-python>=5.0.0.93",
+    "openwakeword>=0.4.0",
+    "pillow>=12.3.0",
+    "playwright>=1.61.0",
+    "psutil>=7.2.2",
+    "pyaudio>=0.2.14",
+    "pyautogui>=0.9.54",
+    "pydantic>=2.13.4",
+    "pytesseract>=0.3.13",
+    "python-dotenv>=1.2.2",
+    "requests>=2.34.2",
+    "rich>=15.0.0",
+    "sounddevice>=0.5.5",
+    "typer>=0.25.1",
+]

@@ -67,3 +67,14 @@ class MemoryService:
                 return value
 
         return None
+    
+    def list_memories(self):
+        return self.repository.list_memories()
+
+
+    def forget(self, key: str):
+        self.repository.forget(key)
+
+
+    def forget_all(self):
+        self.repository.forget_all()

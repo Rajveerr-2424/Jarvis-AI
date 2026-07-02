@@ -1,6 +1,7 @@
 from brain.manager import BrainManager
 from config.settings import settings
 from conversation.manager import ConversationManager
+from core.commands import CommandHandler
 from core.logger import jarvis_logger
 from memory.service import MemoryService
 from ui.console import (
@@ -17,6 +18,7 @@ class Jarvis:
         self.brain = BrainManager()
         self.conversation = ConversationManager()
         self.memory_service = MemoryService()
+        self.commands = CommandHandler(self)
 
         jarvis_logger.info("Jarvis initialized.")
 
@@ -29,17 +31,32 @@ class Jarvis:
         while True:
             user_input = user_prompt()
 
+            # ------------------------------------------
+            # Handle slash commands
+            # ------------------------------------------
+            if user_input.startswith("/"):
+                action = self.commands.execute(user_input)
+
+                if action == "exit":
+                    jarvis_response("Goodbye, Sir.")
+                    jarvis_logger.info("Jarvis shutting down.")
+                    break
+
+                if action == "handled":
+                    continue
+
             jarvis_logger.info(f"User: {user_input}")
 
+            # Normal exit commands
             if user_input.lower() in {"exit", "quit"}:
                 jarvis_response("Goodbye, Sir.")
                 jarvis_logger.info("Jarvis shutting down.")
                 break
 
             try:
-                # --------------------------------------------------
-                # 1. Check persistent memory first
-                # --------------------------------------------------
+                # ------------------------------------------
+                # 1. Check persistent memory
+                # ------------------------------------------
                 memory_answer = self.memory_service.answer_from_memory(
                     user_input
                 )
@@ -49,9 +66,9 @@ class Jarvis:
                     jarvis_response(memory_answer)
                     continue
 
-                # --------------------------------------------------
-                # 2. Save new memories
-                # --------------------------------------------------
+                # ------------------------------------------
+                # 2. Save new memory
+                # ------------------------------------------
                 remembered, reply = self.memory_service.process(
                     user_input
                 )
@@ -61,9 +78,9 @@ class Jarvis:
                     jarvis_response(reply)
                     continue
 
-                # --------------------------------------------------
-                # 3. AI Conversation
-                # --------------------------------------------------
+                # ------------------------------------------
+                # 3. Build conversation
+                # ------------------------------------------
                 messages = self.conversation.build_messages(
                     user_input
                 )

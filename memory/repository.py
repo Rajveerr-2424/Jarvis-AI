@@ -45,3 +45,20 @@ class MemoryRepository:
             "DELETE FROM memories WHERE key=?",
             (key,),
         )
+
+    def list_memories(self):
+        cursor = self.db.execute(
+            """
+        SELECT category, key, value
+        FROM memories
+        ORDER BY category, key
+            """
+        )
+
+        return cursor.fetchall()
+
+
+    def forget_all(self):
+        self.db.execute(
+            "DELETE FROM memories"
+        )

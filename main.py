@@ -1,5 +1,9 @@
+from core.assistant import Jarvis
+
+
 def main():
-    print("Hello from jarvis!")
+    jarvis = Jarvis()
+    jarvis.start()
 
 
 if __name__ == "__main__":

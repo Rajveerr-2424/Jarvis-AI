@@ -8,11 +8,14 @@ from ui.console import (
     jarvis_response,
     error,
 )
+from conversation.manager import ConversationManager
+
 
 
 class Jarvis:
     def __init__(self):
         self.brain = Brain()
+        self.conversation = ConversationManager()
         jarvis_logger.info("Jarvis initialized.")
 
     def start(self):
@@ -32,7 +35,12 @@ class Jarvis:
                 break
 
             try:
-                response = self.brain.ask(user_input)
+                prompt = self.conversation.build_prompt(user_input)
+
+                response = self.brain.ask(prompt)
+
+                self.conversation.add_user_message(user_input)
+                self.conversation.add_assistant_message(response)
 
                 jarvis_logger.info("Response generated successfully.")
 

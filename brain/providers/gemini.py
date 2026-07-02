@@ -14,7 +14,7 @@ class GeminiProvider(BaseProvider):
 
     def ask(self, messages: List[dict]) -> str:
         response = self.client.models.generate_content(
-            model=settings.MODEL,
+            model=settings.GEMINI_MODEL,
             contents=messages,
             config=types.GenerateContentConfig(
                 system_instruction=SYSTEM_PROMPT,

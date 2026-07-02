@@ -20,12 +20,12 @@ class Jarvis:
 
         self.memory = MemoryRepository()
         self.memory.initialize()
-        
+
         jarvis_logger.info("Jarvis initialized.")
 
     def start(self):
         show_banner()
-        show_status(settings.MODEL)
+        show_status(settings.AI_PROVIDER.capitalize())
 
         jarvis_logger.info("Jarvis started successfully.")
 

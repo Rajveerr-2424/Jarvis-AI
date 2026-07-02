@@ -11,7 +11,7 @@ class GeminiBrain:
 
     def generate(self, prompt: str) -> str:
         response = self.client.models.generate_content(
-            model=settings.MODEL,
+            model=settings.GEMINI_MODEL,
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=SYSTEM_PROMPT,

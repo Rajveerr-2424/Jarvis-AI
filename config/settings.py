@@ -2,11 +2,15 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    GEMINI_API_KEY: str
+    AI_PROVIDER: str = "ollama"
 
-    MODEL: str = "gemini-2.5-flash"
+    GEMINI_API_KEY: str = ""
 
-    AI_PROVIDER: str = "gemini"
+    GEMINI_MODEL: str = "gemini-2.5-flash"
+
+    OLLAMA_HOST: str = "http://localhost:11434"
+
+    OLLAMA_MODEL: str = "qwen2.5:3b"
 
     USER_NAME: str = "Rajveerr"
 

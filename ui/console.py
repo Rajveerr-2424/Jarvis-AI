@@ -2,7 +2,24 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
+from prompt_toolkit import PromptSession
+from prompt_toolkit.styles import Style
+
 console = Console()
+
+# Style for prompt_toolkit
+style = Style.from_dict(
+    {
+        # Default typed text
+        "": "#00FF7F",
+
+        # Prompt
+        "prompt": "bold #00BFFF",
+    }
+)
+
+# Reuse one prompt session
+session = PromptSession(style=style)
 
 
 def show_banner():
@@ -27,11 +44,19 @@ def show_status(provider: str):
 
 
 def user_prompt():
-    return console.input("[bold blue]You > [/bold blue]")
+    return session.prompt(
+        [("class:prompt", "You > ")]
+    )
 
 
 def jarvis_response(text: str):
-    console.print(f"[bold cyan]Jarvis >[/bold cyan] {text}\n")
+    console.print(
+        "\n[bold bright_cyan]JARVIS[/bold bright_cyan]"
+    )
+
+    console.print(
+        f"[bright_cyan]{text}[/bright_cyan]\n"
+    )
 
 
 def info(text: str):

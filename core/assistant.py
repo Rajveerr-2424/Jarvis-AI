@@ -9,6 +9,7 @@ from ui.console import (
     error,
 )
 from conversation.manager import ConversationManager
+from memory.repository import MemoryRepository
 
 
 
@@ -16,6 +17,10 @@ class Jarvis:
     def __init__(self):
         self.brain = BrainManager()
         self.conversation = ConversationManager()
+
+        self.memory = MemoryRepository()
+        self.memory.initialize()
+        
         jarvis_logger.info("Jarvis initialized.")
 
     def start(self):

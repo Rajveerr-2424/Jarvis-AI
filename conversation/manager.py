@@ -1,42 +1,43 @@
 from collections import deque
+from typing import List
 
 
 class ConversationManager:
     """
-    Maintains the current conversation context.
-
-    This is short-term memory only.
+    Maintains the short-term conversation context.
+    This context only exists during the current session.
     """
 
-    def __init__(self, max_messages: int = 10):
-        self.history = deque(maxlen=max_messages)
+    def __init__(self, max_messages: int = 20):
+        self.messages = deque(maxlen=max_messages)
 
-    def add_user_message(self, message: str):
-        self.history.append(
+    def add_user(self, text: str):
+        self.messages.append(
             {
                 "role": "user",
-                "content": message,
+                "parts": [{"text": text}],
             }
         )
 
-    def add_assistant_message(self, message: str):
-        self.history.append(
+    def add_assistant(self, text: str):
+        self.messages.append(
             {
-                "role": "assistant",
-                "content": message,
+                "role": "model",
+                "parts": [{"text": text}],
             }
         )
 
-    def build_prompt(self, current_message: str) -> str:
-        prompt = ""
+    def build_messages(self, current_message: str) -> List[dict]:
+        history = list(self.messages)
 
-        for message in self.history:
-            role = message["role"].capitalize()
-            prompt += f"{role}: {message['content']}\n"
+        history.append(
+            {
+                "role": "user",
+                "parts": [{"text": current_message}],
+            }
+        )
 
-        prompt += f"User: {current_message}"
-
-        return prompt
+        return history
 
     def clear(self):
-        self.history.clear()
+        self.messages.clear()

@@ -1,4 +1,4 @@
-from brain.client import Brain
+from brain.manager import BrainManager
 from config.settings import settings
 from core.logger import jarvis_logger
 from ui.console import (
@@ -14,7 +14,7 @@ from conversation.manager import ConversationManager
 
 class Jarvis:
     def __init__(self):
-        self.brain = Brain()
+        self.brain = BrainManager()
         self.conversation = ConversationManager()
         jarvis_logger.info("Jarvis initialized.")
 
@@ -35,12 +35,12 @@ class Jarvis:
                 break
 
             try:
-                prompt = self.conversation.build_prompt(user_input)
+                messages = self.conversation.build_messages(user_input)
 
-                response = self.brain.ask(prompt)
+                response = self.brain.ask(messages)
 
-                self.conversation.add_user_message(user_input)
-                self.conversation.add_assistant_message(response)
+                self.conversation.add_user(user_input)
+                self.conversation.add_assistant(response)
 
                 jarvis_logger.info("Response generated successfully.")
 

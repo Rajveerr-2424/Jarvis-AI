@@ -6,6 +6,8 @@ class Settings(BaseSettings):
 
     MODEL: str = "gemini-2.5-flash"
 
+    AI_PROVIDER: str = "gemini"
+
     USER_NAME: str = "Rajveerr"
 
     ASSISTANT_NAME: str = "Jarvis"

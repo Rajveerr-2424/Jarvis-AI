@@ -1,91 +1,297 @@
-# 🤖 Jarvis AI
-
-> A production-grade AI assistant inspired by Tony Stark's JARVIS, built with Python, Gemini, local LLMs, voice, memory, vision, and desktop automation.
-
 > 🚧 Currently under active development.
+# 🤖 JARVIS AI
+
+> A modular, extensible AI assistant inspired by Tony Stark's J.A.R.V.I.S.
+
+JARVIS AI is a Python-based personal AI assistant built with a production-oriented architecture. It is designed to support multiple AI providers, persistent memory, voice interaction, desktop automation, and computer vision.
+
+This project is focused on building a real AI operating assistant rather than a simple chatbot.
 
 ---
 
 ## ✨ Features
 
-### ✅ Current
+### ✅ Core Features
 
-- Gemini-powered conversational AI
-- Modular architecture
-- Configuration using `.env`
-- Production-ready project structure
-- Git versioning
-
-### 🚧 Coming Soon
-
-- Persistent memory (SQLite)
-- Voice interaction
-- Wake word detection
-- Desktop automation
-- Browser automation
-- Vision (screen understanding)
-- Local LLM support (Ollama)
-- Multi-provider AI
-- MCP tool integration
-- Multi-agent architecture
+- 🧠 Modular AI Architecture
+- 🔄 Multiple AI Provider Support
+- ☁️ Google Gemini Integration
+- 💻 Local Ollama Integration
+- 📜 Rich Terminal Interface
+- 📝 Structured Logging
+- 💬 Conversation Management
+- ⚙️ Environment-based Configuration
+- 📦 Clean Project Architecture
 
 ---
 
-# 🏗️ Project Structure
+## 🏗 Architecture
 
-```text
+```
+                    User
+                      │
+                      ▼
+              Core Assistant
+                      │
+        ┌─────────────┴─────────────┐
+        │                           │
+ Conversation Manager        Memory Manager (WIP)
+        │
+        ▼
+             Brain Manager
+        │
+  ┌─────┴──────────────┐
+  │                    │
+Gemini Provider   Ollama Provider
+```
+
+The assistant never communicates directly with a model.
+
+Instead, every provider implements the same interface, allowing seamless switching between local and cloud models.
+
+---
+
+## 📂 Project Structure
+
+```
 Jarvis-AI/
 │
-├── assets/
-├── automation/
 ├── brain/
-├── config/
+│   ├── manager.py
+│   ├── prompts.py
+│   └── providers/
+│       ├── base.py
+│       ├── gemini.py
+│       └── ollama.py
+│
+├── conversation/
+│
 ├── core/
-├── logs/
-├── mcp/
+│
+├── config/
+│
+├── ui/
+│
 ├── memory/
-├── skills/
-├── tests/
-├── tools/
+│
 ├── vision/
+│
 ├── voice/
+│
+├── automation/
+│
 ├── wakeword/
 │
-├── .env
-├── .gitignore
-├── main.py
-├── pyproject.toml
-└── README.md
+├── tools/
+│
+├── logs/
+│
+├── database/
+│
+└── main.py
 ```
 
 ---
 
-# 🧠 Architecture
+# 🚀 Tech Stack
+
+### Language
+
+- Python 3.13
+
+### AI
+
+- Google Gemini API
+- Ollama
+
+### Libraries
+
+- google-genai
+- ollama
+- rich
+- loguru
+- prompt_toolkit
+- pydantic-settings
+
+### Configuration
+
+- dotenv
+- pydantic-settings
+
+### Logging
+
+- Loguru
+
+### Terminal UI
+
+- Rich
+- Prompt Toolkit
+
+---
+
+# ⚡ Supported Providers
+
+| Provider | Status |
+|----------|--------|
+| Gemini | ✅ |
+| Ollama | ✅ |
+| Groq | 🚧 Planned |
+| OpenRouter | 🚧 Planned |
+
+Switch providers using:
+
+```env
+AI_PROVIDER=gemini
+```
+
+or
+
+```env
+AI_PROVIDER=ollama
+```
+
+No code changes required.
+
+---
+
+# 📜 Logging
+
+JARVIS uses structured logging powered by Loguru.
+
+Example:
 
 ```
-                 User
-                  │
-                  ▼
-            Assistant Engine
-                  │
-                  ▼
-            Brain Manager
-        ┌─────────┴─────────┐
-        │                   │
-     Gemini             Ollama
-                            │
-                        Future Models
+[19:43:11] INFO     assistant:start:42      Jarvis initialized
+[19:43:15] INFO     assistant:start:58      User: Hello
+[19:43:17] INFO     ollama:ask:39           Response generated
+```
+
+Logs are automatically stored in:
+
+```
+logs/jarvis.log
 ```
 
 ---
 
-# 🚀 Installation
+# 🎨 Terminal Interface
+
+Built with Rich.
+
+Features include:
+
+- Colored prompts
+- AI status dashboard
+- Provider display
+- Clean assistant responses
+- Structured developer logs
+
+---
+
+# 🧠 Current Capabilities
+
+- Chat with Gemini
+- Chat with Ollama
+- Multi-provider architecture
+- Short-term conversation context
+- Structured logging
+- Interactive CLI
+
+---
+
+# 🚧 Roadmap
+
+## Phase 1 ✅
+
+- Project Setup
+- Gemini Integration
+- Rich UI
+- Logging
+- Conversation Manager
+
+---
+
+## Phase 2 ✅
+
+- Brain Manager
+- Provider Architecture
+- Ollama Support
+- Environment-based Provider Switching
+
+---
+
+## Phase 3 🚧
+
+- SQLite Memory
+- Remember / Recall
+- User Preferences
+- Conversation Persistence
+
+---
+
+## Phase 4 🚧
+
+- Voice Input (STT)
+- Voice Output (TTS)
+- Wake Word Detection
+
+---
+
+## Phase 5 🚧
+
+- Desktop Automation
+- Browser Automation
+- File Operations
+
+---
+
+## Phase 6 🚧
+
+- Vision
+- Screenshot Analysis
+- OCR
+- Image Understanding
+
+---
+
+## Phase 7 🚧
+
+- MCP Integration
+- Tool Calling
+- Plugin System
+
+---
+
+# 🎯 Design Principles
+
+- Modular Architecture
+- Separation of Concerns
+- Strategy Pattern
+- Extensible Provider Layer
+- Configuration-driven Design
+- Clean Code
+- Production-ready Structure
+
+---
+
+# 📈 Future Goals
+
+- Long-term Memory
+- Local Knowledge Base
+- Hybrid Cloud + Local AI
+- Smart Automation
+- Personal Assistant Capabilities
+- Multi-modal Understanding
+- Real-time Voice Conversation
+
+---
+
+# 🛠 Installation
 
 Clone the repository
 
 ```bash
 git clone https://github.com/Rajveerr-2424/Jarvis-AI.git
-
 cd Jarvis-AI
 ```
 
@@ -109,29 +315,21 @@ Install dependencies
 uv sync
 ```
 
----
-
-# 🔑 Environment Variables
-
 Create a `.env`
 
 ```env
-GEMINI_API_KEY=YOUR_API_KEY
+AI_PROVIDER=ollama
 
-MODEL=gemini-2.5-flash
+OLLAMA_HOST=http://localhost:11434
+OLLAMA_MODEL=qwen2.5:3b
+
+GEMINI_API_KEY=
 
 USER_NAME=Rajveerr
-
 ASSISTANT_NAME=Jarvis
-
-TEMPERATURE=0.7
-
-MAX_OUTPUT_TOKENS=2048
 ```
 
----
-
-# ▶️ Run
+Run
 
 ```bash
 python main.py
@@ -139,74 +337,15 @@ python main.py
 
 ---
 
-# 🛣️ Roadmap
+# 🤝 Contributing
 
-## v0.1
-- [x] Project architecture
-- [x] Gemini integration
-- [x] Interactive chat
-
-## v0.2
-- [ ] SQLite memory
-- [ ] Conversation history
-- [ ] Memory retrieval
-
-## v0.3
-- [ ] Voice input
-- [ ] Text-to-Speech
-
-## v0.4
-- [ ] Wake word
-- [ ] Always-on assistant
-
-## v0.5
-- [ ] Desktop automation
-- [ ] File search
-- [ ] Clipboard
-- [ ] System controls
-
-## v0.6
-- [ ] Vision
-- [ ] Screenshot analysis
-- [ ] OCR
-
-## v0.7
-- [ ] Browser automation
-- [ ] MCP tools
-
-## v1.0
-- [ ] Fully functional AI operating assistant
+Contributions, ideas, and feature suggestions are welcome.
 
 ---
 
-# 🛠️ Tech Stack
+# 📄 License
 
-- Python
-- Gemini API
-- uv
-- FastMCP
-- Faster Whisper
-- OpenWakeWord
-- Playwright
-- SQLite
-- FAISS
-- OpenCV
-
----
-
-# 📌 Philosophy
-
-Jarvis AI is designed with a modular architecture so components such as AI providers, memory, voice, automation, and vision can evolve independently.
-
-The long-term goal is to create a production-grade AI operating assistant rather than a simple chatbot.
-
----
-
-# 📜 License
-
-This project is currently under development.
-
-A license will be added before the first public release.
+MIT License
 
 ---
 
@@ -214,4 +353,6 @@ A license will be added before the first public release.
 
 **Rajveerr Awachat**
 
-Building the closest thing to a real-life JARVIS using free and open-source technologies.
+Computer Science Engineer • AI Developer • Robotics Enthusiast
+
+Building a real-world JARVIS from scratch.

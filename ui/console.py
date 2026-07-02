@@ -51,7 +51,7 @@ def user_prompt():
 
 def jarvis_response(text: str):
     console.print(
-        "\n[bold bright_cyan]JARVIS[/bold bright_cyan]"
+        "\n[bold bright_cyan]JARVIS>[/bold bright_cyan]"
     )
 
     console.print(

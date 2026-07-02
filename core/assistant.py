@@ -1,25 +1,22 @@
 from brain.manager import BrainManager
 from config.settings import settings
+from conversation.manager import ConversationManager
 from core.logger import jarvis_logger
+from memory.service import MemoryService
 from ui.console import (
+    error,
+    jarvis_response,
     show_banner,
     show_status,
     user_prompt,
-    jarvis_response,
-    error,
 )
-from conversation.manager import ConversationManager
-from memory.repository import MemoryRepository
-
 
 
 class Jarvis:
     def __init__(self):
         self.brain = BrainManager()
         self.conversation = ConversationManager()
-
-        self.memory = MemoryRepository()
-        self.memory.initialize()
+        self.memory_service = MemoryService()
 
         jarvis_logger.info("Jarvis initialized.")
 
@@ -40,7 +37,36 @@ class Jarvis:
                 break
 
             try:
-                messages = self.conversation.build_messages(user_input)
+                # --------------------------------------------------
+                # 1. Check persistent memory first
+                # --------------------------------------------------
+                memory_answer = self.memory_service.answer_from_memory(
+                    user_input
+                )
+
+                if memory_answer:
+                    jarvis_logger.info("Answer served from memory.")
+                    jarvis_response(memory_answer)
+                    continue
+
+                # --------------------------------------------------
+                # 2. Save new memories
+                # --------------------------------------------------
+                remembered, reply = self.memory_service.process(
+                    user_input
+                )
+
+                if remembered:
+                    jarvis_logger.info("New memory stored.")
+                    jarvis_response(reply)
+                    continue
+
+                # --------------------------------------------------
+                # 3. AI Conversation
+                # --------------------------------------------------
+                messages = self.conversation.build_messages(
+                    user_input
+                )
 
                 response = self.brain.ask(messages)
 
@@ -52,5 +78,10 @@ class Jarvis:
                 jarvis_response(response)
 
             except Exception as e:
-                jarvis_logger.exception(str(e))
-                error("Something went wrong.")
+                jarvis_logger.exception(
+                    f"Unhandled exception: {e}"
+                )
+
+                error(
+                    "Sorry Sir, something went wrong while processing your request."
+                )

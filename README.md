@@ -167,7 +167,7 @@ Jarvis/
 Clone the repository
 
 ```bash
-git clone https://github.com/<YOUR_USERNAME>/Jarvis-AI.git
+git clone https://github.com/Rajveerr-2424/Jarvis-AI.git
 ```
 
 Move into the project

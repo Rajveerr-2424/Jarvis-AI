@@ -68,6 +68,10 @@ class CommandHandler:
         if command == "/cls":
             os.system("cls" if os.name == "nt" else "clear")
             return "handled"
+        
+        if command == "/tools":
+            self.tools()
+            return "handled"
 
         if command == "/exit":
             return "exit"
@@ -91,6 +95,7 @@ class CommandHandler:
         table.add_row("/version", "Show version information")
         table.add_row("/clear", "Clear conversation history")
         table.add_row("/cls", "Clear terminal")
+        table.add_row("/tools", "Show available tools")
         table.add_row("/exit", "Exit Jarvis")
 
         console.print(table)
@@ -199,3 +204,29 @@ class CommandHandler:
         console.print(
             "\n[green]Conversation history cleared.[/green]\n"
         )
+
+    def tools(self):
+        table = Table(title="JARVIS Tool Catalog")
+
+        table.add_column("Name", style="cyan")
+        table.add_column("Enabled", style="green", justify="center")
+        table.add_column("Version", style="yellow")
+        table.add_column("Description", style="white")
+
+        tools = self.assistant.tools.list_tools()
+
+        if not tools:
+            console.print(
+                "\n[yellow]No tools registered.[/yellow]\n"
+            )
+            return
+
+        for tool in tools:
+            table.add_row(
+                tool.name,
+                "Yes" if tool.enabled else "No",
+                tool.version,
+                tool.description,
+            )
+
+        console.print(table)

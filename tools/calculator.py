@@ -5,9 +5,15 @@ from tools.core.base import BaseTool
 
 
 class CalculatorTool(BaseTool):
-    name = "calculator"
+    name = "Calculator"
 
     description = "Evaluate arithmetic expressions."
+
+    version = "1.0"
+
+    author = "Rajveerr"
+
+    enabled = True
 
     def can_handle(self, text: str):
         allowed = "0123456789+-*/(). "

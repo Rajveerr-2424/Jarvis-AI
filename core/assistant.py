@@ -12,7 +12,6 @@ from ui.console import (
     user_prompt,
 )
 
-from tools.calculator import CalculatorTool
 from tools.core.manager import ToolManager
 
 
@@ -23,8 +22,8 @@ class Jarvis:
         self.memory_service = MemoryService()
         self.commands = CommandHandler(self)
 
+        # Tool Manager loads all tools from ToolRegistry
         self.tools = ToolManager()
-        self.tools.register(CalculatorTool())
 
         jarvis_logger.info("Jarvis initialized.")
 
@@ -65,12 +64,13 @@ class Jarvis:
                 # --------------------------------------------------
                 # Tools
                 # --------------------------------------------------
-                tool_response = self.tools.process(user_input)
+                tool, tool_response = self.tools.process(user_input)
 
                 if tool_response:
                     jarvis_logger.info(
-                        f"Tool handled request: {type(tool_response).__name__}"
+                        f"Tool '{tool.name}' handled request."
                     )
+
                     jarvis_response(tool_response)
                     continue
 
@@ -85,6 +85,7 @@ class Jarvis:
                     jarvis_logger.info(
                         "Answer served from persistent memory."
                     )
+
                     jarvis_response(memory_answer)
                     continue
 
@@ -99,6 +100,7 @@ class Jarvis:
                     jarvis_logger.info(
                         "New memory stored."
                     )
+
                     jarvis_response(reply)
                     continue
 

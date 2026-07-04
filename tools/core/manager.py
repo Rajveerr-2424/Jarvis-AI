@@ -1,13 +1,21 @@
+from tools.core.catalog import ToolCatalog
+
+
 class ToolManager:
     def __init__(self):
-        self.tools = []
+        self.catalog = ToolCatalog()
 
-    def register(self, tool):
-        self.tools.append(tool)
+    def process(self, text):
+        for tool in self.catalog.all():
 
-    def process(self, text: str):
-        for tool in self.tools:
+            if not tool.enabled:
+                continue
+
             if tool.can_handle(text):
-                return tool.execute(text)
+                response = tool.execute(text)
+                return tool, response
 
-        return None
+        return None, None
+
+    def list_tools(self):
+        return self.catalog.all()

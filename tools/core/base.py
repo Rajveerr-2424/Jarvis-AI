@@ -2,8 +2,24 @@ from abc import ABC, abstractmethod
 
 
 class BaseTool(ABC):
-    name: str
-    description: str
+
+    name = "Unnamed"
+
+    description = ""
+
+    version = "1.0"
+
+    author = "Rajveerr"
+
+    enabled = True
+
+    calls = 0
+
+    errors = 0
+
+    last_used = None
+
+    average_time = 0
 
     @abstractmethod
     def can_handle(self, text: str) -> bool:

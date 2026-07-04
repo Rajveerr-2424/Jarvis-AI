@@ -12,6 +12,9 @@ from ui.console import (
     user_prompt,
 )
 
+from tools.calculator import CalculatorTool
+from tools.core.manager import ToolManager
+
 
 class Jarvis:
     def __init__(self):
@@ -19,6 +22,9 @@ class Jarvis:
         self.conversation = ConversationManager()
         self.memory_service = MemoryService()
         self.commands = CommandHandler(self)
+
+        self.tools = ToolManager()
+        self.tools.register(CalculatorTool())
 
         jarvis_logger.info("Jarvis initialized.")
 
@@ -31,9 +37,9 @@ class Jarvis:
         while True:
             user_input = user_prompt()
 
-            # ------------------------------------------
-            # Handle slash commands
-            # ------------------------------------------
+            # --------------------------------------------------
+            # Slash Commands
+            # --------------------------------------------------
             if user_input.startswith("/"):
                 action = self.commands.execute(user_input)
 
@@ -47,40 +53,58 @@ class Jarvis:
 
             jarvis_logger.info(f"User: {user_input}")
 
-            # Normal exit commands
+            # --------------------------------------------------
+            # Normal Exit
+            # --------------------------------------------------
             if user_input.lower() in {"exit", "quit"}:
                 jarvis_response("Goodbye, Sir.")
                 jarvis_logger.info("Jarvis shutting down.")
                 break
 
             try:
-                # ------------------------------------------
-                # 1. Check persistent memory
-                # ------------------------------------------
+                # --------------------------------------------------
+                # Tools
+                # --------------------------------------------------
+                tool_response = self.tools.process(user_input)
+
+                if tool_response:
+                    jarvis_logger.info(
+                        f"Tool handled request: {type(tool_response).__name__}"
+                    )
+                    jarvis_response(tool_response)
+                    continue
+
+                # --------------------------------------------------
+                # Persistent Memory Recall
+                # --------------------------------------------------
                 memory_answer = self.memory_service.answer_from_memory(
                     user_input
                 )
 
                 if memory_answer:
-                    jarvis_logger.info("Answer served from memory.")
+                    jarvis_logger.info(
+                        "Answer served from persistent memory."
+                    )
                     jarvis_response(memory_answer)
                     continue
 
-                # ------------------------------------------
-                # 2. Save new memory
-                # ------------------------------------------
+                # --------------------------------------------------
+                # Persistent Memory Save
+                # --------------------------------------------------
                 remembered, reply = self.memory_service.process(
                     user_input
                 )
 
                 if remembered:
-                    jarvis_logger.info("New memory stored.")
+                    jarvis_logger.info(
+                        "New memory stored."
+                    )
                     jarvis_response(reply)
                     continue
 
-                # ------------------------------------------
-                # 3. Build conversation
-                # ------------------------------------------
+                # --------------------------------------------------
+                # AI Conversation
+                # --------------------------------------------------
                 messages = self.conversation.build_messages(
                     user_input
                 )
@@ -90,7 +114,9 @@ class Jarvis:
                 self.conversation.add_user(user_input)
                 self.conversation.add_assistant(response)
 
-                jarvis_logger.info("Response generated successfully.")
+                jarvis_logger.info(
+                    "Response generated successfully."
+                )
 
                 jarvis_response(response)
 

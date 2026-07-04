@@ -82,7 +82,7 @@ class CommandHandler:
 
         table.add_row("/help", "Show all commands")
         table.add_row("/status", "Show Jarvis status")
-        table.add_row("/provider", "Current AI provider")
+        table.add_row("/provider", "Current provider mode")
         table.add_row("/model", "Current AI model")
         table.add_row("/memory", "Show stored memories")
         table.add_row("/forget <key>", "Delete a memory")
@@ -101,32 +101,39 @@ class CommandHandler:
         table.add_column("Property", style="cyan")
         table.add_column("Value", style="green")
 
-        table.add_row("Provider", settings.AI_PROVIDER)
-
-        if settings.AI_PROVIDER == "ollama":
-            model = settings.OLLAMA_MODEL
+        if settings.AI_PROVIDER == "auto":
+            table.add_row("Provider Mode", "Auto")
+            table.add_row("Primary", "Ollama")
+            table.add_row("Fallback", "Gemini")
+            table.add_row("Current", self.assistant.brain.current_provider)
         else:
-            model = settings.GEMINI_MODEL
+            table.add_row("Provider", settings.AI_PROVIDER)
+            table.add_row("Current", self.assistant.brain.current_provider)
 
-        table.add_row("Model", model)
+        table.add_row("Model", self.assistant.brain.current_model)
         table.add_row("Memory", "Enabled")
         table.add_row("Voice", "Disabled")
 
         console.print(table)
 
     def provider(self):
-        console.print(
-            f"\n[cyan]Current Provider:[/cyan] {settings.AI_PROVIDER}\n"
-        )
+        table = Table(title="Provider Information")
+
+        table.add_column("Property", style="cyan")
+        table.add_column("Value", style="green")
+
+        table.add_row("Mode", settings.AI_PROVIDER)
+        table.add_row("Current", self.assistant.brain.current_provider)
+
+        if settings.AI_PROVIDER == "auto":
+            table.add_row("Primary", "Ollama")
+            table.add_row("Fallback", "Gemini")
+
+        console.print(table)
 
     def model(self):
-        if settings.AI_PROVIDER == "ollama":
-            model = settings.OLLAMA_MODEL
-        else:
-            model = settings.GEMINI_MODEL
-
         console.print(
-            f"\n[cyan]Current Model:[/cyan] {model}\n"
+            f"\n[cyan]Current Model:[/cyan] {self.assistant.brain.current_model}\n"
         )
 
     def memory(self):
@@ -164,10 +171,10 @@ class CommandHandler:
             return
 
         for message in self.assistant.conversation.messages:
-            role = message["role"]
-            text = message["parts"][0]["text"]
-
-            table.add_row(role, text)
+            table.add_row(
+                message["role"],
+                message["parts"][0]["text"],
+            )
 
         console.print(table)
 
@@ -177,14 +184,10 @@ class CommandHandler:
         table.add_column("Property", style="cyan")
         table.add_column("Value", style="green")
 
-        if settings.AI_PROVIDER == "ollama":
-            model = settings.OLLAMA_MODEL
-        else:
-            model = settings.GEMINI_MODEL
-
         table.add_row("Version", "0.3")
-        table.add_row("Provider", settings.AI_PROVIDER)
-        table.add_row("Model", model)
+        table.add_row("Provider Mode", settings.AI_PROVIDER)
+        table.add_row("Current Provider", self.assistant.brain.current_provider)
+        table.add_row("Model", self.assistant.brain.current_model)
         table.add_row("Python", platform.python_version())
         table.add_row("Platform", platform.system())
 

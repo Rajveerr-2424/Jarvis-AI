@@ -323,26 +323,6 @@ Upcoming
 
 ---
 
-# Project Status
-
-Current Progress
-
-```text
-██████████████░░░░░░░░░░░░░░░░░░░░░░
-
-Foundation           ✅
-AI Providers         ✅
-Memory               ✅
-Commands             ✅
-Tool Framework       ✅
-Tool Ecosystem       🚧
-Planner              ⏳
-Voice                ⏳
-Vision               ⏳
-Automation           ⏳
-```
-
----
 
 # Contributing
 

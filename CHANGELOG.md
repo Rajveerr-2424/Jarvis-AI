@@ -6,6 +6,31 @@ The format is inspired by Keep a Changelog and follows Semantic Versioning.
 
 ---
 
+## [0.3.1] - 2026-07-05
+
+### Added
+
+#### File Tool
+- Added modular File Tool architecture.
+- Added current working directory command.
+- Added directory listing command.
+- Added secure file reading.
+- Added file creation command.
+- Added workspace path validation.
+
+### Improved
+
+- Refactored File Tool to use a command dispatcher.
+- Split filesystem operations into dedicated modules.
+- Simplified command routing for future file operations.
+
+### Security
+
+- Restricted filesystem operations to the current workspace.
+- Prevented parent directory traversal (`..`).
+- Added safe path resolution using `pathlib`.
+
+
 ## [0.3.0] - 2026-07-05
 
 ### 🚀 Added

@@ -6,39 +6,27 @@ The format is inspired by Keep a Changelog and follows Semantic Versioning.
 
 ---
 
-## [0.3.2] - 2026-07-05
-
 ## [Unreleased]
 
-### Added
+### Planned
 
-#### File Tool
-- Added file write operation.
-- Added file append operation.
-- Added short command aliases:
-  - rf
-  - cf
-  - wf
-  - af
-- Added JARVIS Command Language (JCL) naming convention for file commands.
+#### Architecture
+- Command Parser.
+- Tool Registry.
+- JARVIS Command Language (JCL) routing.
+- Planner Engine.
+- Multi-step task execution.
+- Tool chaining.
 
-### Improved
+#### Future
+- Voice support.
+- Vision support.
+- Streaming responses.
+- Automation framework.
 
-- Standardized file commands to use explicit resources:
-  - read file
-  - create file
-  - write file
-  - append file
-- Improved command dispatcher structure.
-- Improved File Tool help documentation.
-- Cleaned command routing for future filesystem operations.
+---
 
-### Architecture
-
-- Locked in the JCL design:
-  - <Action> <Resource> <Arguments>
-- Reserved generic verbs for future tools.
-- Deferred CommandParser implementation to v0.5.
+## [0.3.2] - 2026-07-05
 
 ### Added
 
@@ -47,25 +35,83 @@ The format is inspired by Keep a Changelog and follows Semantic Versioning.
 - Added current working directory command.
 - Added directory listing command.
 - Added secure file reading.
-- Added file creation command.
+- Added file creation.
+- Added file writing.
+- Added file append operation.
+- Added folder creation.
+- Added file renaming.
+- Added file copying.
+- Added file moving.
+- Added file deletion.
 - Added workspace path validation.
+
+#### Command Aliases
+- `rf`
+- `cf`
+- `wf`
+- `af`
+- `ren`
+- `cp`
+- `mv`
+- `df`
+- `md`
+- `pwd`
+- `ls`
 
 ### Improved
 
+#### File Tool
 - Refactored File Tool to use a command dispatcher.
 - Split filesystem operations into dedicated modules.
-- Simplified command routing for future file operations.
+- Improved help documentation.
+- Improved command routing.
+- Standardized filesystem commands.
+- Standardized explicit resource-based commands:
+  - `read file`
+  - `create file`
+  - `write file`
+  - `append file`
+  - `rename file`
+  - `copy file`
+  - `move file`
+  - `delete file`
+  - `create folder`
 
 ### Security
 
 - Restricted filesystem operations to the current workspace.
-- Prevented parent directory traversal (`..`).
+- Prevented directory traversal (`..`).
 - Added safe path resolution using `pathlib`.
+- Prevented overwriting existing files during copy and move operations.
+- Added validation for filesystem operations.
 
+### Architecture
+
+- Adopted the **JARVIS Command Language (JCL)**.
+
+```
+<Action> <Resource> <Arguments>
+```
+
+Examples:
+
+```
+read file notes.txt
+write file notes.txt Hello
+append file notes.txt World
+create folder Projects
+delete file notes.txt
+```
+
+- Reserved generic verbs (`write`, `delete`, `open`, etc.) for future system-wide resources.
+- Standardized explicit resource-based commands.
+- Deferred the centralized `CommandParser` architecture to **v0.5**.
+
+---
 
 ## [0.3.0] - 2026-07-05
 
-### 🚀 Added
+### Added
 
 #### AI Core
 - Multi-provider AI architecture.
@@ -123,7 +169,7 @@ The format is inspired by Keep a Changelog and follows Semantic Versioning.
 - Console logging.
 - Improved log formatting.
 
-### ✨ Improved
+### Improved
 
 - Refactored project into a modular architecture.
 - Introduced provider abstraction layer.
@@ -135,7 +181,7 @@ The format is inspired by Keep a Changelog and follows Semantic Versioning.
 - Better separation of responsibilities.
 - Improved code readability and maintainability.
 
-### 🛠 Fixed
+### Fixed
 
 - Provider switching issues.
 - Conversation context handling.
@@ -148,7 +194,7 @@ The format is inspired by Keep a Changelog and follows Semantic Versioning.
 
 ## [0.2.0]
 
-### 🚀 Added
+### Added
 
 #### AI
 - Gemini API integration.
@@ -164,7 +210,7 @@ The format is inspired by Keep a Changelog and follows Semantic Versioning.
 - Interactive CLI.
 - Rich console output.
 
-### ✨ Improved
+### Improved
 
 - Better prompt engineering.
 - Improved response formatting.
@@ -173,7 +219,7 @@ The format is inspired by Keep a Changelog and follows Semantic Versioning.
 
 ## [0.1.0]
 
-### 🚀 Initial Release
+### Initial Release
 
 #### Core
 - Initial JARVIS project structure.
@@ -183,7 +229,6 @@ The format is inspired by Keep a Changelog and follows Semantic Versioning.
 - Environment variable support.
 
 #### Developer Experience
-
 - Logging system.
 - Project modularization.
 - Initial documentation.

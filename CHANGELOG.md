@@ -8,6 +8,38 @@ The format is inspired by Keep a Changelog and follows Semantic Versioning.
 
 ## [0.3.2] - 2026-07-05
 
+## [Unreleased]
+
+### Added
+
+#### File Tool
+- Added file write operation.
+- Added file append operation.
+- Added short command aliases:
+  - rf
+  - cf
+  - wf
+  - af
+- Added JARVIS Command Language (JCL) naming convention for file commands.
+
+### Improved
+
+- Standardized file commands to use explicit resources:
+  - read file
+  - create file
+  - write file
+  - append file
+- Improved command dispatcher structure.
+- Improved File Tool help documentation.
+- Cleaned command routing for future filesystem operations.
+
+### Architecture
+
+- Locked in the JCL design:
+  - <Action> <Resource> <Arguments>
+- Reserved generic verbs for future tools.
+- Deferred CommandParser implementation to v0.5.
+
 ### Added
 
 #### File Tool

@@ -6,7 +6,7 @@
 
 > An intelligent AI assistant inspired by **J.A.R.V.I.S.** from the Marvel Cinematic Universe, designed to be modular, extensible, and capable of evolving into a fully autonomous desktop assistant.
 
-![Version](https://img.shields.io/badge/version-v0.3.0-AA0505?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-v0.3.2-AA0505?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-Pre--Release-orange?style=for-the-badge)
 ![Python](https://img.shields.io/badge/python-3.11+-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)

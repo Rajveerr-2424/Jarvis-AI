@@ -5,6 +5,7 @@ from tools.password import PasswordTool
 from tools.hash import HashTool
 from tools.system import SystemTool
 from tools.clipboard import ClipboardTool
+from tools.file import FileTool
 
 
 class ToolCatalog:
@@ -21,6 +22,7 @@ class ToolCatalog:
             HashTool.name: HashTool(),
             SystemTool.name: SystemTool(),
             ClipboardTool.name: ClipboardTool(),
+            FileTool.name: FileTool(),
         }
 
     def all(self):

@@ -24,6 +24,11 @@ def append_file(filename: str, content: str) -> str:
             "a",
             encoding="utf-8",
         ) as file:
+
+            # Insert a newline only if the file already contains data.
+            if path.stat().st_size > 0:
+                file.write("\n")
+
             file.write(content)
 
         return (

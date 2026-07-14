@@ -30,6 +30,9 @@ def move_file(source: str, destination: str) -> str:
     if destination_path.exists():
         return "Destination already exists."
 
+    if source_path.is_dir():
+        return "Moving directories is not supported."
+
     try:
         shutil.move(
             str(source_path),
